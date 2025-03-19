@@ -89,7 +89,7 @@ namespace AECS20250319.AppWebMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UserId,Username,Email,PasswordHash,Role")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("UserId,Username,Email,Role")] User user)
         {
             if (id != user.UserId)
             {
