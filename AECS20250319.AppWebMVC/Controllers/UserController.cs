@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AECS20250319.AppWebMVC.Models;
+using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace AECS20250319.AppWebMVC.Controllers
 {
@@ -57,6 +60,7 @@ namespace AECS20250319.AppWebMVC.Controllers
         {
             if (ModelState.IsValid)
             {
+                user.PasswordHash = CalcularHashMD5(user.PasswordHash);
                 _context.Add(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -151,6 +155,22 @@ namespace AECS20250319.AppWebMVC.Controllers
         private bool UserExists(int id)
         {
             return _context.Users.Any(e => e.UserId == id);
+        }
+
+        private string CalcularHashMD5(string input)
+        {
+            using (MD5 md5 = MD5.Create())
+            {
+                byte[] inputBytes = Encoding.UTF8.GetBytes(input);
+                byte[] hashBytes = md5.ComputeHash(inputBytes);
+
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < hashBytes.Length; i++)
+                {
+                    sb.Append(hashBytes[i].ToString("x2")); // "x2" convierte el byte en una cadena hexadecimal de dos caracteres.
+                }
+                return sb.ToString();
+            }
         }
     }
 }
