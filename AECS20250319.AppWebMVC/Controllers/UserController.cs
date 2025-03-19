@@ -96,14 +96,26 @@ namespace AECS20250319.AppWebMVC.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(user);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
+
+            //if (ModelState.IsValid)
+            //{
+            //    try
+            //    {
+            //        _context.Update(user);
+            //        await _context.SaveChangesAsync();
+            //    }
+            var usuarioUpdate = await _context.Users
+            .FirstOrDefaultAsync(u => u.UserId == user.UserId);
+            try
+             {
+                        usuarioUpdate.Username = user.Username;
+                        usuarioUpdate.Email = user.Email;
+                        usuarioUpdate.Role = user.Role;
+                        _context.Update(usuarioUpdate);
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction(nameof(Index));
+            }
+            catch (DbUpdateConcurrencyException)
                 {
                     if (!UserExists(user.UserId))
                     {
@@ -114,8 +126,8 @@ namespace AECS20250319.AppWebMVC.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
-            }
+                //return RedirectToAction(nameof(Index));
+            
             return View(user);
         }
 
