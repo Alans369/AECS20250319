@@ -6,9 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AECS20250319.AppWebMVC.Models;
-using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AECS20250319.AppWebMVC.Controllers
 {
@@ -25,6 +28,40 @@ namespace AECS20250319.AppWebMVC.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await _context.Users.ToListAsync());
+        }
+
+        [AllowAnonymous]
+        public IActionResult Login()
+        {
+            return View();
+        }
+        [AllowAnonymous]
+        [HttpPost]
+
+
+        public async Task<IActionResult> Login(Usuario usuario)
+        {
+            usuario.Password = CalcularHashMD5(usuario.Password);
+            var usuarioAuth = await _context.
+                Usuarios.
+                FirstOrDefaultAsync(s => s.Email == usuario.Email && s.Password == usuario.Password);
+            if (usuarioAuth != null && usuarioAuth.Id > 0 && usuarioAuth.Email == usuario.Email)
+            {
+                var claims = new[] {
+                    new Claim(ClaimTypes.Name, usuarioAuth.Email),
+                    new Claim("Id", usuarioAuth.Id.ToString()),
+                     new Claim("Nombre", usuarioAuth.Nombre),
+                    new Claim(ClaimTypes.Role, usuarioAuth.Rol)
+                    };
+                var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                ModelState.AddModelError("", "El email o contraseña estan incorrectos");
+                return View();
+            }
         }
 
         // GET: User/Details/5
