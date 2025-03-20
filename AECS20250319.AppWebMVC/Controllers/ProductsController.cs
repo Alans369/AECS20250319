@@ -21,12 +21,31 @@ namespace AECS20250319.AppWebMVC.Controllers
         }
 
         // GET: Products
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(Product producto, int topRegistro = 10)
         {
-            var test20250319DbContext = _context.Products.Include(p => p.Brand).Include(p => p.Category);
-            return View(await test20250319DbContext.ToListAsync());
-        }
+            var query = _context.Products.AsQueryable();
+            if (!string.IsNullOrWhiteSpace(producto.ProductName))
+                query = query.Where(s => s.ProductName.Contains(producto.ProductName));
+            if (!string.IsNullOrWhiteSpace(producto.Description))
+                query = query.Where(s => s.Description.Contains(producto.Description));
+            if (producto.BrandId > 0)
+                query = query.Where(s => s.BrandId == producto.BrandId);
+            if (producto.CategoryId > 0)
+                query = query.Where(s => s.CategoryId == producto.CategoryId);
+            if (topRegistro > 0)
+                query = query.Take(topRegistro);
+            query = query
+                .Include(p => p.Category).Include(p => p.Brand);
 
+            var marcas = _context.Brands.ToList();
+            marcas.Add(new Brand { BrandName = "SELECCIONAR", BrandId = 0 });
+            var categorias = _context.Categories.ToList();
+            categorias.Add(new Category { CategoryName = "SELECCIONAR", CategoryId = 0 });
+            ViewData["CategoriaId"] = new SelectList(categorias, " CategoryId", "CategoryName", 0);
+            ViewData["MarcaId"] = new SelectList(marcas, " BrandId", " BrandName", 0);
+
+            return View(await query.ToListAsync());
+        }
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)
         {

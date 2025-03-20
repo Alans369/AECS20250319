@@ -1,8 +1,8 @@
 ﻿@model IEnumerable<AECS20250319.AppWebMVC.Models.Product>
 
-@{
-    ViewData["Title"] = "Index";
-}
+@* @{ *@
+@*     ViewData["Title"] = "Index"; *@
+@* } *@
 
 <h1>Buscar productos</h1>
 <form asp-action="Index">
@@ -10,13 +10,13 @@
         <div class="col-4">
             <div class="form-group">
                 <label class="control-label">Nombre</label>
-                <input type="text" name="nombre" class="form-control" />
+                <input type="text" name="ProductName" class="form-control" />
             </div>
         </div>
         <div class="col-8">
             <div class="form-group">
                 <label class="control-label">Descripcion</label>
-                <textarea name="descripcion" class="form-control"></textarea>
+                <textarea name="Description" class="form-control"></textarea>
             </div>
         </div>
 
@@ -25,13 +25,13 @@
         <div class="col-4">
             <div class="form-group">
                 <label class="control-label">Marcas</label>
-                <select name="marcaId" class="form-control" asp-items="ViewBag.MarcaId"></select>
+                <select name="BrandId" class="form-control" asp-items="ViewBag.BrandId"></select>
             </div>
         </div>
         <div class="col-4">
             <div class="form-group">
                 <label class="control-label">Categorias</label>
-                <select name="categoriaId" class="form-control" asp-items="ViewBag.CategoriaId"></select>
+                <select name="categoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
             </div>
         </div>
         <div class="col-4">
@@ -107,8 +107,18 @@
 
 @section Scripts {
     <script>
-                       $(document).ready(function() {
-            $('#myTable').DataTable();
+        $(document).ready(function() {
+             // $('#myTable').DataTable();
+
+            // $('#myTable').DataTable({
+            //      "language": {
+            //     "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+            //     }
+            // });
+
+             $('#myTable').DataTable({
+               "language":languageTable
+             });
         });
     </script>
 }
