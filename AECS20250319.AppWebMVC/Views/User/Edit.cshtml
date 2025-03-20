@@ -4,43 +4,49 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
 
-<h4>User</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="UserId" />
-            <div class="form-group">
-                <label asp-for="Username" class="control-label"></label>
-                <input asp-for="Username" class="form-control" />
-                <span asp-validation-for="Username" class="text-danger"></span>
+<div class="row justify-content-center my-4">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Editar Usuario</h4>
             </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+            <div class="card-body">
+                <form asp-action="Edit" class="needs-validation" novalidate>
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                    <input type="hidden" asp-for="UserId" />
+                    <div class="form-group mb-3">
+                        <label asp-for="Username" class="control-label fw-bold"></label>
+                        <input asp-for="Username" class="form-control form-control-lg" />
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Email" class="control-label fw-bold"></label>
+                        <input asp-for="Email" class="form-control form-control-lg" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label asp-for="Role" class="control-label fw-bold"></label>
+                        <select asp-for="Role" class="form-control form-select form-control-lg">
+                            <option value="">SELECCIONAR</option>
+                            <option value="ADMINISTRADOR">ADMINISTRADOR</option>
+                            <option value="GERENTE">GERENTE</option>
+                        </select>
+                        <span asp-validation-for="Role" class="text-danger"></span>
+                    </div>
+                    <div class="form-group d-grid gap-2">
+                        <input type="submit" value="Guardar" class="btn btn-primary btn-lg" />
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="Role" class="control-label"></label>
-                <select asp-for="Role" class="form-control">
-                    <option value="">SELECCIONAR</option>
-                    <option value="ADMINISTRADOR">ADMINISTRADOR</option>
-                    <option value="GERENTE">GERENTE</option>
-                </select>
-                <span asp-validation-for="Role" class="text-danger"></span>
+            <div class="card-footer">
+                <a asp-action="Index" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left"></i> Volver a la Lista
+                </a>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
