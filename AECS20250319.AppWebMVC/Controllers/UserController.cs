@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace AECS20250319.AppWebMVC.Controllers
 {
+    [Authorize(Roles = "ADMINISTRADOR")]
     public class UserController : Controller
     {
         private readonly Test20250319DbContext _context;
