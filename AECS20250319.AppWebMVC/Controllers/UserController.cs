@@ -39,19 +39,19 @@ namespace AECS20250319.AppWebMVC.Controllers
         [HttpPost]
 
 
-        public async Task<IActionResult> Login(Usuario usuario)
+        public async Task<IActionResult> Login(User usuario)
         {
-            usuario.Password = CalcularHashMD5(usuario.Password);
+            usuario.PasswordHash = CalcularHashMD5(usuario.PasswordHash);
             var usuarioAuth = await _context.
-                Usuarios.
-                FirstOrDefaultAsync(s => s.Email == usuario.Email && s.Password == usuario.Password);
-            if (usuarioAuth != null && usuarioAuth.Id > 0 && usuarioAuth.Email == usuario.Email)
+                Users.
+                FirstOrDefaultAsync(s => s.Email == usuario.Email && s.PasswordHash == usuario.PasswordHash);
+            if (usuarioAuth != null && usuarioAuth.UserId > 0 && usuarioAuth.Email == usuario.Email)
             {
                 var claims = new[] {
                     new Claim(ClaimTypes.Name, usuarioAuth.Email),
-                    new Claim("Id", usuarioAuth.Id.ToString()),
-                     new Claim("Nombre", usuarioAuth.Nombre),
-                    new Claim(ClaimTypes.Role, usuarioAuth.Rol)
+                    new Claim("Id", usuarioAuth.UserId.ToString()),
+                     new Claim("Nombre", usuarioAuth.Username),
+                    new Claim(ClaimTypes.Role, usuarioAuth.Role)
                     };
                 var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
