@@ -1,8 +1,5 @@
 ﻿@model IEnumerable<AECS20250319.AppWebMVC.Models.Product>
 
-@* @{ *@
-@*     ViewData["Title"] = "Index"; *@
-@* } *@
 
 <h1>Buscar productos</h1>
 <form asp-action="Index">
@@ -25,7 +22,7 @@
         <div class="col-4">
             <div class="form-group">
                 <label class="control-label">Marcas</label>
-                <select name="BrandId" class="form-control" asp-items="ViewBag.BrandId"></select>
+                <select name="brandId" class="form-control" asp-items="ViewBag.BrandId"></select>
             </div>
         </div>
         <div class="col-4">
@@ -78,30 +75,45 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Brand.BrandName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category.CategoryName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
-            </td>
-        </tr>
-}
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Brand.BrandName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+                    </td>
+                </tr>
+            
+        }
+        }
+
+        else
+        {
+            <tr>
+                <td colspan="6">No hay productos disponibles</td>
+                </tr>
+            }
+
+
+        }
     </tbody>
 </table>
 
