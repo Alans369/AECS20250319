@@ -4,53 +4,56 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
 
-<h4>User</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Username" class="control-label"></label>
-                <input asp-for="Username" class="form-control" />
-                <span asp-validation-for="Username" class="text-danger"></span>
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h1 class="h3 mb-0">Create</h1>
+                    <h2 class="h5 mb-0">User</h2>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Create">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+                        <div class="form-group">
+                            <label asp-for="Username" class="control-label font-weight-bold"></label>
+                            <input asp-for="Username" class="form-control" />
+                            <span asp-validation-for="Username" class="text-danger small"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Email" class="control-label font-weight-bold"></label>
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger small"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="PasswordHash" class="control-label font-weight-bold"></label>
+                            <input asp-for="PasswordHash" class="form-control" />
+                            <span asp-validation-for="PasswordHash" class="text-danger small"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Role" class="control-label font-weight-bold"></label>
+                            <select asp-for="Role" class="form-control">
+                                <option value="">SELECCIONAR</option>
+                                <option value="ADMINISTRADOR">ADMINISTRADOR</option>
+                                <option value="GERENTE">GERENTE</option>
+                            </select>
+                            <span asp-validation-for="Role" class="text-danger small"></span>
+                        </div>
+                        <div class="form-group text-center">
+                            <input type="submit" value="Create" class="btn btn-primary btn-block" />
+                        </div>
+                        <div class="text-center">
+                            <a asp-action="Index" class="btn btn-link"><i class="fas fa-arrow-left mr-1"></i></a>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group"> 
-                <label asp-for="PasswordHash" class="control-label"></label> 
-                <input asp-for="PasswordHash" class="form-control" /> 
-                <span asp-validation-for="PasswordHash" class="text-danger"></span>
-             </div>
-            @* <div class="form-group">
-            @*     <label asp-for="Role" class="control-label"></label> *@
-            @*     <input asp-for="Role" class="form-control" /> *@
-            @*     <span asp-validation-for="Role" class="text-danger"></span> *@
-            @* </div> *@
-            <div class="form-group">
-                <label asp-for="Role" class="control-label"></label>
-                <select asp-for="Role" class="form-control">
-                    <option value="">SELECCIONAR</option>
-                    <option value="ADMINISTRADOR">ADMINISTRADOR</option>
-                    <option value="GERENTE">GERENTE</option>
-                </select>
-                @* <span asp-validation-for="Rol" class="text-danger"></span> *@
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
