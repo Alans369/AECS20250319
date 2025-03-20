@@ -22,7 +22,7 @@ namespace AECS20250319.AppWebMVC.Controllers
 
         // GET: Products
         // GET: Products
-        public async Task<ActionResult> Index(Product producto, int topRegistro = 10)
+        public async Task<IActionResult> Index(Product producto, int topRegistro = 10)
         {
             try
             {
