@@ -29,7 +29,13 @@ namespace AECS20250319.AppWebMVC.Controllers
         {
             return View(await _context.Users.ToListAsync());
         }
-
+        [AllowAnonymous]
+        public async Task<IActionResult> CerrarSession()
+        {
+            // Hola mundo
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Index", "Home");
+        }
         [AllowAnonymous]
         public IActionResult Login()
         {
