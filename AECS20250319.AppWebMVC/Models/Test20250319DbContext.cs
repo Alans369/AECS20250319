@@ -25,7 +25,7 @@ public partial class Test20250319DbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
-        => optionsBuilder.UseSqlServer("Server=localhost;Database=blazordb;User=blazoruser;Password=raiot123;Port=3306;");
+        => optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=Test20250319DB;Integrated Security=True;Encrypt=False");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
