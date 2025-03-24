@@ -9,107 +9,71 @@
     <link rel="stylesheet" href="~/AECS20250319.AppWebMVC.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <div class="container-fluid">
-        <div class="row">
-            <!-- Sidebar / Menú lateral -->
-            <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse" id="sidebarMenu">
-                <div class="sidebar-sticky pt-3">
-                    <a class="navbar-brand d-flex align-items-center mb-3" asp-area="" asp-controller="Home" asp-action="Index">
-                        <img src="/img/logo.png" alt="Logo" class="mr-2" style="width: 30px; height: 30px;">
-                        <span>AECS20250319</span>
-                    </a>
-
-                    <ul class="nav flex-column">
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">AECS20250319.AppWebMVC</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
-                                <i class="bi bi-house-door mr-2"></i>
-                                Home
-                            </a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Privacy">
-                                <i class="bi bi-shield-lock mr-2"></i>
-                                Privacy
-                            </a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        @*     <li class="nav-item"> *@
+                        @*         <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">usuarios</a> *@
+                        @*     </li> *@
+                        @*     <li class="nav-item"> *@
+                        @*         <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="login">login</a> *@
+                        @*     </li> *@
+                        @* </ul> *@
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <a class="nav-link d-flex align-items-center" asp-area="" asp-controller="Brands" asp-action="Index">
-                                    <i class="bi bi-tag mr-2"></i>
-                                    Marcas
-                                </a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Brands" asp-action="Index">Marcas</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link d-flex align-items-center" asp-area="" asp-controller="Categories" asp-action="Index">
-                                    <i class="bi bi-list-ul mr-2"></i>
-                                    Categorías
-                                </a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Categories" asp-action="Index">Categorias</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link d-flex align-items-center" asp-area="" asp-controller="User" asp-action="Index">
-                                    <i class="bi bi-people mr-2"></i>
-                                    Usuarios
-                                </a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">Usuarios</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link d-flex align-items-center" asp-area="" asp-controller="Products" asp-action="Index">
-                                    <i class="bi bi-box mr-2"></i>
-                                    Productos
-                                </a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Index">Productos</a>
                             </li>
+
                         }
                     </ul>
-
-                    <div class="mt-4 border-top pt-3">
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            var nombre = User.FindFirst("Nombre")?.Value;
-                            <div class="d-flex align-items-center mb-2">
-                                <i class="bi bi-person-circle mr-2"></i>
-                                <span>@nombre</span>
-                            </div>
-                            <a class="btn btn-outline-secondary btn-sm d-flex align-items-center"
-                               asp-area="" asp-controller="User" asp-action="CerrarSession">
-                                <i class="bi bi-box-arrow-right mr-1"></i>
-                                Cerrar sesión
-                            </a>
-                        }
-                        else
-                        {
-                            <a class="btn btn-primary d-flex align-items-center justify-content-center"
-                               asp-area="" asp-controller="User" asp-action="login">
-                                <i class="bi bi-box-arrow-in-right mr-2"></i>
-                                Iniciar sesión
-                            </a>
-                        }
-                    </div>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        var nombre = User.FindFirst("Nombre")?.Value;
+                        <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="CerrarSession">Cerrar session</a>
+                        <span>@nombre</span>
+                    }
+                    else
+                    {
+                        <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="login">Iniciar session</a>
+                    }
                 </div>
-            </nav>
-
-            <!-- Contenido principal -->
-            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-                <!-- Barra superior para móviles -->
-                <nav class="navbar navbar-light bg-light d-md-none border-bottom mb-3">
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebarMenu"
-                            aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">AECS20250319</a>
-                </nav>
-
-                <!-- Contenido de la página -->
-                @RenderBody()
-
-                <!-- Footer -->
-                <footer class="border-top footer text-muted mt-4">
-                    <div class="container">
-                        &copy; 2025 - AECS20250319.AppWebMVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                    </div>
-                </footer>
-            </main>
-        </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
     </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2025 - AECS20250319.AppWebMVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
@@ -117,7 +81,6 @@
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
