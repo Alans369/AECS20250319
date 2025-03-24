@@ -176,7 +176,7 @@ namespace AECS20250319.AppWebMVC.Controllers
         }
 
         // GET: User/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id
         {
             if (id == null)
             {
